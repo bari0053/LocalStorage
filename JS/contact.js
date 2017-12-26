@@ -29,7 +29,7 @@ const createItem = function(contact){
     
     let li = document.createElement('li');
     li.className = 'contact';
-    
+    li.addEventListener("click", editContact)
     let span = document.createElement('span');
     span.className = 'delete';
     span.setAttribute('data-key', contact.email);
@@ -37,6 +37,7 @@ const createItem = function(contact){
     li.appendChild(span);
     
     let h3 = document.createElement('h3');
+    h3.className = 'name';
     h3.textContent = contact.fullname;
     li.appendChild(h3);
     
@@ -67,6 +68,7 @@ const hideForm = function(ev){
     document.querySelector('.fab').style.opacity = '1';
     document.querySelector('.contactform').style.display = 'none';
     document.querySelector('.overlay').style.display = 'none'; 
+    document.querySelector('.contactform form').reset();
 }
 
 const addContact = function(ev){
@@ -97,6 +99,15 @@ const removeContact = function(ev){
     console.log(contacts);
     localStorage.setItem(KEY, JSON.stringify(contacts));
     updateList();
+    setTimeout(function() { alert('Are you sure? If not, click "Save". If yes, click "Cancel".')}, 100)}
+
+const editContact = function(ev){
+    //ev willbe the one selected
+    let change = ev.currentTarget;
+    showForm(ev);
+    document.getElementById('name').value = change.querySelector('h3').textContent;
+    document.getElementById('email').value = change.querySelector('.email').textContent;
+    document.getElementById('phone').value = change.querySelector('.phone').textContent;
 }
 
 document.addEventListener('DOMContentLoaded',init);

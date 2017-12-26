@@ -28,11 +28,12 @@ const updateList = function(){
 const createItem = function(contact){
     
     let li = document.createElement('li');
+    contact.id = Math.floor(Math.random()*1000);
     li.className = 'contact';
     li.addEventListener("click", editContact)
     let span = document.createElement('span');
     span.className = 'delete';
-    span.setAttribute('data-key', contact.email);
+    span.setAttribute('data-key', contact.id);
     span.addEventListener('click', removeContact);
     li.appendChild(span);
     
@@ -90,11 +91,11 @@ const addContact = function(ev){
     
 const removeContact = function(ev){
     ev.preventDefault();
-    let email = ev.target.getAttribute('data-key');
-    console.log(email);
+    let id = ev.target.getAttribute('data-key');
+    console.log(id);
     contacts = contacts.filter((contact)=>{
-        console.log(contact.email, email);
-        return !(contact.email == email);
+        console.log(contact.id, id);
+        return !(contact.id == id);
     });
     console.log(contacts);
     localStorage.setItem(KEY, JSON.stringify(contacts));
